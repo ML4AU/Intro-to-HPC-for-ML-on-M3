@@ -1,0 +1,22 @@
+---
+title: "What is a cluster?"
+teaching: 0
+exercises: 0
+questions:
+- "What is a High Performance Computer (HPC)?"
+- "What are the components of a HPC?"
+- "What is a scheduler, and why do we need one?"
+objectives:
+- "Explain what a HPC is at a high level."
+- "Explain what a node and scheduler are in a HPC."
+- "Determine whether or not HPC is the right tool for your research."
+keypoints:
+- "Most HPCs are not supercomputers, but clusters composed of many computers."
+- "Each computer in the HPC is a group of resources, called a node. Nodes with the same flavour 
+  of resources and access requirements are called partitions."
+- "A HPC is shared with other people, so it has a scheduler to ensure everyone has fair access."
+---
+oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+{% include links.md %}
+
