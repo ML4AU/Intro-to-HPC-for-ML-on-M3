@@ -33,13 +33,20 @@ Some learners may want to look at every module, others may want to bare
 essentials to get going and return to these materials as they need more
 information. These materials have also been designed so that they can 
 be completed without an instructor, but you can always reach out for 
-assistance at help@massive.org.au if you get stuck. 
+assistance by emailing help@massive.org.au if you get stuck. 
 
 [list of the most core content]
 
 This course has been developed as part of the ARDC funded "Environments to 
 Accelerate Machine Learning Based Discovery" project.
 > ## Prerequisites
+> This lesson assumes you are familiar with the Unix command line, 
+> and that you have introductory knowledge of Machine Learning. 
+> Example Machine Learning scripts in this course will be in Python. 
+> If you can navigate a filesystem on the command line,
+> including making files, and run some basic ML models in Python, 
+> you're the target audience for this course. We assume no HPC knowledge.
 >
-> 
+> We also assume you have access to the [M3 cluster](https://docs.massive.org.au/M3/m3users.html)
+> for running the exercises we provide as part of the course.
 {: .prereq}
