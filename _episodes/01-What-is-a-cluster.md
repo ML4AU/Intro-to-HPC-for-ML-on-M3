@@ -78,7 +78,7 @@ different partition. We could call this "4 GPU laptops."
 > > for example, you might want a partition that only 
 > > allows code that runs for half an hour on it.
 > > Grouping those nodes into one partition makes it easier to 
-> > organise the cluster for different purposes.> > 
+> > organise the cluster for different purposes.
 > > {: .output}
 > {: .solution}
 {: .challenge}
@@ -140,3 +140,4 @@ On M3, our scheduler is called SLURM.
 > > It's hard work being a scheduler!
 > > {: .output}
 > {: .solution}                                                                                                                        {: .challenge} 
+{: .challenge}
