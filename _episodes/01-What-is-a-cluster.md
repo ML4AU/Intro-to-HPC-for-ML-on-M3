@@ -139,5 +139,6 @@ On M3, our scheduler is called SLURM.
 > > is it worth the same as someone asking for 20GB RAM, or 500 GB of RAM?
 > > It's hard work being a scheduler!
 > > {: .output}
-> {: .solution}                                                                                                                        {: .challenge} 
+> {: .solution}                     
 {: .challenge}
+
