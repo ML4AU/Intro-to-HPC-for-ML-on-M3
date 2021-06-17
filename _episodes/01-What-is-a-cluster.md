@@ -17,29 +17,38 @@ keypoints:
 - "A HPC is shared with other people, so it has a scheduler to ensure everyone has fair access."
 ---
 
+<!---
+Prerequisite: None, purely conceptual knowledge here.
+Motivations: Understanding what a HPC is will help you determine
+if the HPC can assist you with research.
+HPC level: 1/5
+ML level: 1/5
+-->
+
 ## What is a HPC?
 
 The acronym HPC refers to a High Performance Computer - but what does that really mean?
 We will spend a little bit of time introducing some core language.
 - The *cloud* refers to any computing resources which are not right 
-  in front of you - any remote resources. 
+  in front of you, or any remote resources. 
 - *Local workstation* in this course will refer to the computer in front of you,
   whether that's a desktop, laptop, tablet, or other device. 
 - *Supercomputer* refers to one particular type of high performance computer,
   which is composed of advanced processors. There was a time in computing when 
   vector processing was being developed, making these processors 
   much faster than their predecessors. [CRAY-1](https://doi.org/10.1145/359327.359336) 
-  was the first supercomputer implementing these processors.
+  was the first supercomputer implementing these processors. This meant they
+  could take a single task and complete it much faster than the average computer. 
 - *Cluster* also refers to a type of high performance computer. Over time, advanced 
   processors have become available to all computers, so modern HPCs tend to be clusters
   rather than supercomputers. This means they're composed of many smaller computers
-  rather than a few extremely fast processors. They are powerful for solving problems
+  rather than advanced computers. They are powerful for solving problems
   that can be split into parts and distributed across the many computers that make up the cluster.
 
 The HPC we assume you have access to in this course, 
-MASSIVE M3(https://docs.massive.org.au/M3/m3users.html), is a **cluster**.
+[MASSIVE M3](https://docs.massive.org.au/M3/m3users.html), is a **cluster**.
 What this means in practice, is that not all problems are solved faster
-simply by running them on a HPC - you have to think about how to adapt your problem for a cluster. 
+simply by running them on a HPC cluster - you have to think about how to adapt your problem. 
 Don't worry if you're not sure what that looks like yet.
 
 ## What are the components of a cluster?
@@ -114,10 +123,10 @@ access to the resources you need, and then a *scheduler*
 will decide who gets to use the resources next. This ensures if we
 all want to use the same resources at the same time,
 there's a way to decide who gets to use it first, as 
-the scheduler will create a *queue*. One way to think of the
-scheduler is like a game of Tetris, where it's trying to fit
+the scheduler will create a *queue*. You can think of the
+scheduler playing a game of Tetris, where it's trying to fit
 all the resource requests together in the best way possible. 
-On M3, our scheduler is called SLURM.
+On M3, our scheduler is called [SLURM](https://slurm.schedmd.com/).
 
 > ## How do we make scheduling fair?
 >
