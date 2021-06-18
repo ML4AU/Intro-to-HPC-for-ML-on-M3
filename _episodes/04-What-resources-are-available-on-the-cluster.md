@@ -10,7 +10,10 @@ objectives:
 - Use the command line to determine the resources available on the cluster.
 - Use other tools and resources to determine the resources available on the cluster.
 keypoints:
-- 
+- Different clusters will have different resources available
+  on them.
+- You can check resources on the cluster with the command
+  line, or by using documentation.
 ---
 <!---
 prerequisites: login to cluster, cli, what is a cluster
@@ -43,34 +46,96 @@ These include:
   Google Colab provides access to TPUs, with [an introductory
   tutorial notebook](https://colab.research.google.com/notebooks/tpu.ipynb).  
 - Time. When using a shared cluster environment, one resource you
-  will need to specify is how much time you need to access your other
-  resources. 
+  will need to specify is how much time you require access your
+ resources for. 
 - RAM (Random Access Memory). You will need to consider how much
   memory is required to run your code. 
 - MORE? 
+
+> ## Local resources
+>
+> What resources are available on your local workstation? 
+>
+> {: .source}
+{: .discussion}
+
 
 ## How do I know what's available on MASSIVE?
 There are a variety of ways to learn about which resources are 
 available to you on a given cluster. Most HPC sites will offer 
 a documentation website with information about what's available. 
-For MASSIVE, you can find our documentation on [docs.massive.org.au](https://docs.massive.org.au/).
+For MASSIVE, you can find our documentation on 
+[docs.massive.org.au](https://docs.massive.org.au/).
 In particular, you can find out more about our hardware on the 
 [About M3 page](https://docs.massive.org.au/M3/m3users.html), 
-or about our GPUs specifically in [our section on GPUs](https://docs.massive.org.au/M3/GPUs-on-M3.html).
+or about our GPUs specifically in 
+[our section on GPUs](https://docs.massive.org.au/M3/GPUs-on-M3.html).
 
 We also provide some of this documentation in the Strudel interface.
-Under the Account Info tab, you are able to see a lift of desktop
+Under the Account Info tab, you are able to see a list of desktop
 types that are available, and under the Desktops tab, you will
-be able to learn more about those specific GPU resources.
+be able to learn more about the specific resources assigned to each desktop type.
 
-Documentation is one way to find out what is available on the cluster,
-but this requires someone to keep it up to date. Another way to 
-find out information about the resources on the cluster is using
-the command line. You will remember from "What is a cluster?" that 
+Another method to find out information about the resources on the cluster 
+is using the command line. You will remember from "What is a cluster?" that 
 we group nodes with the same resources into partitions. Each of these
 nodes will have a particular set of resources like CPUs and RAM
-associated with it. 
+associated with it. There are a few ways to learn more about these
+partitions and nodes on the command line that we'll explore here. 
+Most of these commands are associated with SLURM, the scheduler for our HPC.
 
+### What partitions are available?
+- `sinfo -s` : [sinfo is a SLURM command](https://slurm.schedmd.com/sinfo.html)
+  that gives you information about nodes and partitions. 
+  This particular command summarises the partitions, where 
+  the `-s` flag indicates summary. It will output a list of each
+  partition, whether it's available at the moment (and not 
+  down for maintenance, for example), the time limits or 
+  wall time for using that partition, how many nodes are 
+  allocated, idle, out, and total, and which nodes belong to
+  the partition. 
+- `scontrol show partitions` : [scontrol is a SLURM command](https://slurm.schedmd.com/scontrol.html)
+  for configuring SLURM, and this command gives you a more 
+  in depth view over the partitions available and how they
+  have been configured. There may be information in this ouput
+  which you don't understand - this is okay, for our purposes
+  it's another way of seeing which partitions are on MASSIVE.
+  You can also use `scontrol show partition <partition-name>`
+  to look at specific partitions.
+### What nodes are available? 
+- `sinfo --partition=<partition-name> -N --format=%10N%10c%10m%20f%10G` :
+  This sinfo command gives more details about the node on 
+  the partition you specify for <partition-name>. It will
+  print out a list of node names, the number of CPUs, 
+  the memroy on the node, and any other features such as 
+  GPUs on the nodes.
+- `show_cluster` : show_cluster is a command developed for 
+  MASSIVE to present a formatted summary of the status of
+  nodes on M3. For a similar output on other clusters, you
+  can use `sinfo -lN`. 
 
-
-
+> ## Investigating the Cluster
+>
+> 1. Try typing in the commands above and inspect their
+> output. 
+> 2. What type of GPUs are there on the m3g partition?
+> How did you find out?
+>
+> {: .source}
+>
+> > ## Solution
+> >
+> > 1. There are a variety of formats with different
+> > information available to you for learning about the cluster!
+> > 2. There are V100 GPUs on the m3g partition. You could
+> > have learned this by running:
+> > - `sinfo --partition=m3g -N --format=%10N%10c%10m%20f%10G`
+> > - `show_cluster`
+> > - `sinfo -lN`
+> > - Checking docs.massive.org.au for more information 
+> >
+> > As you can see, there are many ways to learn about the cluster!
+> >
+> > {: .output}
+> {: .solution}
+{: .challenge}
