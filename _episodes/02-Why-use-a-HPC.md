@@ -22,13 +22,14 @@ keypoints:
 - "Deep learning in particular lends itself to the HPC environment,
   and can accelerate your training."
 ---
+
 <!---
 Prerequisite: What is a cluster?  
 Motivations: Understanding what problems are suitable on the HPC
 allows you to decide whether or not to continue this course :)
 HPC level: 1/5
 ML level: 2/5
--->  
+--->  
 
 ## So, why would I use a HPC?
 Remember, that not all problems are solved faster by using a cluster.
@@ -88,6 +89,7 @@ parts is matrix multiplication.
 If we were to multiply two 2x2 matrices by hand, it would look like:
 
 [[a,b]  [[e,f],  = [[ae+bg, af+bh],
+
  [c,d]]  [g,h]]     [ce+dg, cf+dh]]
 
 Let's suppose that every multiplication takes 1 second, and every
@@ -113,8 +115,8 @@ we can reduce computation time from 12 seconds to only 2!
 > Can you think of any other problems, in mathematics, 
 > or your day to day life, that can be parallelised if you have
 > more people to work on them?
->
-> {: .discussion}
+> {: .source}
+{: .discussion}
 
 ## What ML problems is a HPC suitable for?
 Access to a HPC is useful for a variety of machine learning problems.
