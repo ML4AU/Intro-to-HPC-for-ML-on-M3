@@ -71,7 +71,8 @@ In particular, you can find out more about our hardware on the
 or about our GPUs specifically in 
 [our section on GPUs](https://docs.massive.org.au/M3/GPUs-on-M3.html).
 
-We also provide some of this documentation in the Strudel interface.
+We also provide some of this documentation in the 
+[Strudel2 interface](beta.desktop.cvl.org.au).
 Under the Account Info tab, you are able to see a list of desktop
 types that are available, and under the Desktops tab, you will
 be able to learn more about the specific resources assigned to each desktop type.
