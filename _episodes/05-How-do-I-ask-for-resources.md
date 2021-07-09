@@ -235,6 +235,7 @@ our job include:
 >    `sacct -j <job-id> --format=JobID,Jobname,partition,state,time,start,end,elapsed,MaxRss,MaxVMSize,nnodes,ncpus,nodelist`
 >    what do you think the output is useful for?
 > {: .source}                                                           > 
+> > 
 > > ## Solution                                                         
 > >                                                                     
 > > You would run the command:
@@ -251,6 +252,7 @@ our job include:
 > >    tool for profiling the resources your job has used, with many options
 > >    to select from including the ones shown here. You can learn more in
 > >    [the SLURM documentation.](https://slurm.schedmd.com/sacct.html)
+> >
 > > {: .output}
 > {: .solution}
 {: .challenge}
