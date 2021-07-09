@@ -232,8 +232,10 @@ our job include:
 >    ./thiscourse/bashscript.sh
 > 3. Once you've recorded the time somewhere, cancel your smux interactive job. 
 > 4. Try typing in the command 
->    `sacct -j <job-id> --format=JobID,Jobname,partition,state,time,start,end,elapsed,MaxRss,MaxVMSize,nnodes,ncpus,nodelist`
->    what do you think the output is useful for?
+> ~~~
+> sacct -j <job-id> --format=JobID,Jobname,partition,state,time,start,end,elapsed,MaxRss,MaxVMSize,nnodes,ncpus,nodelist`
+> ~~~   
+> what do you think the output is useful for?
 >
 > {: .source}                                                           > 
 > > 
