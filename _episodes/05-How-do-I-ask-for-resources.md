@@ -234,6 +234,7 @@ our job include:
 > 4. Try typing in the command 
 >    `sacct -j <job-id> --format=JobID,Jobname,partition,state,time,start,end,elapsed,MaxRss,MaxVMSize,nnodes,ncpus,nodelist`
 >    what do you think the output is useful for?
+>
 > {: .source}                                                           > 
 > > 
 > > ## Solution                                                         
