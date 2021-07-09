@@ -237,7 +237,7 @@ our job include:
 > ~~~   
 > what do you think the output is useful for?
 >
-> {: .source}                                                           > 
+> {: .source}
 >
 > > 
 > > ## Solution                                                         
