@@ -77,7 +77,7 @@ the scheduler ensures compute resource access is fair.
 > >    at `m3-dtn.massive.org.au`.
 > > 3. A git pull can generally be done safely on the login
 > >    node, but if it's particularly large and takes a long
-> >    time, consider moving to a compute node instead.
+> >    longer than 15 minutes, consider moving to a compute node instead.
 > > 4. Editing a script is lightweight enough that doing this
 > >    won't impact other users. You can do this on the login node.
 > >
@@ -90,24 +90,27 @@ the scheduler ensures compute resource access is fair.
 ## Requesting compute resources on the command line
 Here, we assume you have ssh'd into M3 using a terminal,
 or are running a terminal on the login node with Strudel2. 
-Traditionally, HPC is accessible via a Linux terminal, so it's
-important to understand how to request resources this way,
+While GUI interfaces exist for accessing HPC, traditionally
+HPC access is provided via the command line, and using Linux. 
+It's important to understand how to request resources 
+on the command line,
 and how to query the HPC for your requests.
 
 You will remember from earlier than the cluster is shared 
 among many users, and so there is a scheduler, and queue. 
 *Jobs* refer to tasks for the HPC that wait in the queue, 
 including resource requests - you can think of each resource
-request as a "job". The way the queue is ordered and the amount
-of time you wait to access the resources you ask for is a 
+request as a *job*. The way the queue is ordered and the amount
+of time you will wait in the queue is a 
 complicated topic that we will discuss later, but for now
-you can think of the queue as managing supply and demand.
+you can think of the queue as a method for the 
+scheduler to manage supply and demand.
 
 In general, there are two ways to request resources on the 
 command line:
-1. Interactively: You get access to a compute node where you can time in commands 
+1. Interactively: You request access to a compute node where you can type in commands 
    in real time, the same way you would on your local workstation.
-   You may have to wait in the queue to access the compute node interactively.
+   You may have to wait in the queue to access a compute node interactively.
 
 2. Job submission: You write a list of instructions and 
    send them off the queue in a job submission script, which are
@@ -115,7 +118,7 @@ command line:
    to wait in the queue for your job to start executing, but it
    will execute automatically when resources are available.
 
-There is an additional way to access compute resources on MASSIVE using 
+There is an additional way to access compute resources on MASSIVE with 
 the Strudel interface, which we will cover later. 
 
 ## Interactive jobs (srun and smux)
@@ -127,21 +130,28 @@ nodes (i.e. use many cores). Despite being interactive, you may need to
 queue to gain access to a session. You can find documentation for
 [running interactive jobs on MASSIVE on our docs website](https://docs.massive.org.au/M3/slurm/interactive-jobs.html?highlight=smux).
 
-On a traditional cluster with a SLURM scheduler, you would use the command
-`srun` to request resources for and interactive job. On MASSIVE, we have a command
-called `smux`, which combines srun with tmux. The command line tool 
+On a general cluster with a SLURM scheduler, you would use the command
+`srun` to request resources for an interactive job. On MASSIVE, we have a command
+called `smux`, which combines `srun` with `tmux`. The command line tool 
 `tmux` allows you to reconnect to running sessions, split your terminal
 pane so you can do work side by side, and otherwise improve your command
-line experience. By combining the two with `smux`, we give you the ability
-to connect and reconnect to interactive sessions as they run incase 
-your internet drops out in the middle of a job for example. 
+line experience. By combining the two to create `smux`, you have the ability
+to connect and reconnect to interactive sessions as they run - for example,
+if your internet drops out while you're running an interactive job, this allows
+you to reconnect to your interactive session rather than requesting a new one.
 
 In general, the command to start a new interactive job on MASSIVE is 
 
 `smux new-session`
 
 This will request an interactive job with default resources of 1 CPU, 
-4G of memory, and 2 hours of walltime. If you run this command, you will
+4G of memory, and 2 hours of walltime. 
+
+<img src="../fig/smux-connecting.png" alt="Screenshot of a terminal after running smux new-session" width="612" style="display: block; margin: auto;" />
+
+This request will be added the queue, 
+and when the resources are available, the job will schedule and you'll have access
+to a compute node.If you run this command, you will
 notice your terminal changes and gains a bar down the bottom letting you know
 which node you're running on. It will look like this:
 
