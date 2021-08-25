@@ -147,7 +147,7 @@ In general, the command to start a new interactive job on MASSIVE is
 This will request an interactive job with default resources of 1 CPU, 
 4G of memory, and 2 hours of walltime. 
 
-<img src="../fig/smux-connecting.png" alt="Screenshot of a terminal after running smux new-session" width="612" style="display: block; margin: auto;" />
+<img src="../fig/smux-connecting.png" alt="Screenshot of a terminal after running smux new-session"/>
 
 This request will be added the queue, 
 and when the resources are available, the job will schedule and you'll have access
