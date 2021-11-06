@@ -32,11 +32,13 @@ ML level: 2/5
 --->  
 
 ## So, why would I use a HPC?
-Remember, that not all problems are solved faster by using a cluster.
+Remember, not all problems are solved faster by using a cluster.
 If all I do is move my code from my local workstation onto the HPC, 
-I may not see any improvement at all - you have to spend some time
-thinking about what you can benefit from the HPC. 
+I may see no improvement - you have to spend some time
+thinking about the benefits of migrating to the HPC environment.
+ 
 Some reasons you might use a HPC, particularly for machine learning, are:
+
 - The HPC has resources that you don't have - for example, your personal
   workstation might not have any GPUs for your GPU enabled code.
 - The HPC has better versions of resources you do have, like GPUs
@@ -46,9 +48,10 @@ Some reasons you might use a HPC, particularly for machine learning, are:
 - You have code that runs for a very long time, and want to outsource
   that work off of your local workstation.
 - You have code which can be scaled across multiple CPUs or GPUs,
-  and want to takw advantage of the cluster to scale your code.
+  and want to take advantage of the cluster to scale your code.
+
 Usually, someone moves to the HPC when they realise they're being limited
-by their existing computational equipment.
+by their existing resources.
 
 > ## Research restriction
 >
@@ -74,9 +77,9 @@ by their existing computational equipment.
 - A HPC can't do *sequential* problems extra fast. For example,
   when you get ready in the morning, you can't brush your teeth
   and eat breakfast at the same time, they must be done in order.
-- A HPC can distribute your work if you can break it into parts 
-  that don't depend on or conflict with other parts. For example,
-  you can have toast in the toaster and a kettle boiling  
+- A HPC can distribute your work if you can break it into independant parts 
+  which don't depend on or conflict with eachother. For example,
+  you can boil a kettle and toast bread at the same time.
   at the same time.
 - Long story short - if your problem can be broken into independant 
   parts, a HPC may help accelerate your work. Sometimes this takes
@@ -121,10 +124,8 @@ we can reduce computation time from 12 seconds to only 2!
 ## What ML problems is a HPC suitable for?
 Access to a HPC is useful for a variety of machine learning problems.
 Some examples of where a HPC excels in machine learning include:
-- In deep learning specifically, there is a lot of matrix multiplication.
-  GPUs are designed to handle graphical representation, which 
-  means they're able to effectively accelerate the matrix operations  
-  associated with deep learning. Some HPCs provide more advanced 
+- In deep learning specifically, there is a lot of matrix multiplication
+  which GPU architecture is designed to do quickly. Some HPCs provide more advanced 
   GPUs designed for computation rather than graphics, which are
   especially good for this task.
 - When developing a machine learning model, there is a need to test
@@ -132,9 +133,9 @@ Some examples of where a HPC excels in machine learning include:
   times with different hyperparameters, or doing a grid search
   to determine those ideal hyperparameters. These tests can be 
   performed independantly of eachother, but your local workstation
-  may be limited by the number of processes it has - you can access
-  more of these on a HPC.
+  may be limited by the number of processors it has - you can access
+  more resources on a HPC.
 - Similarly, when evaluting the performance of a model, you may use
   techniques like cross-validation, which require repeated independant
   runs of the same code. Having more processors to distribute
-  this workload across simultaneously is where a HPC comes in handy.
+  this workload across is where a HPC comes in handy.
