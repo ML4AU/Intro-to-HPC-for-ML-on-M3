@@ -27,34 +27,37 @@ ML level: 1/5
 
 ## What is a HPC?
 
-The acronym HPC refers to a High Performance Computer - but what does that really mean?
-We will spend a little bit of time introducing some core language.
+The acronym HPC refers to a High Performance Computer or High Performance Computing - but what does that really mean?
+We will spend some time introducing core terminology here.
+
 - The *cloud* refers to any computing resources which are not right 
-  in front of you, or any remote resources. 
+  in front of you - remote resources. 
 - *Local workstation* in this course will refer to the computer in front of you,
   whether that's a desktop, laptop, tablet, or other device. 
 - *Supercomputer* refers to one particular type of high performance computer,
-  which is composed of advanced processors. There was a time in computing when 
-  vector processing was being developed, making these processors 
-  much faster than their predecessors. [CRAY-1](https://doi.org/10.1145/359327.359336) 
-  was the first supercomputer implementing these processors. This meant they
-  could take a single task and complete it much faster than the average computer. 
+  which is composed of advanced processors. In the past the development of vector 
+  processors meant that processor choice alone made a significant difference to the 
+  speed at which you could get things done. [CRAY-1](https://doi.org/10.1145/359327.359336) 
+  was the first supercomputer implementing these processors. These processors were able
+  to complete a single task much faster than the average computer. 
 - *Cluster* also refers to a type of high performance computer. Over time, advanced 
-  processors have become available to all computers, so modern HPCs tend to be clusters
-  rather than supercomputers. This means they're composed of many smaller computers
-  rather than advanced computers. They are powerful for solving problems
-  that can be split into parts and distributed across the many computers that make up the cluster.
+  processors have become widely available, so to continue improving performance 
+  new techniques were required - having many of these advanced processors and putting 
+  them in one "cluster" means that problems that can be distributed across many processors
+  can be done in parallel, improving the speed at which you can get things done. 
+  Cluster computing is still often referred to as supercomputing.
 
 The HPC we assume you have access to in this course, 
 [MASSIVE M3](https://docs.massive.org.au/M3/m3users.html), is a **cluster**.
 What this means in practice, is that not all problems are solved faster
-simply by running them on a HPC cluster - you have to think about how to adapt your problem. 
+simply by running them on a HPC cluster - you have to think about how to adapt your problem
+to be distributed accross more processors, or to use the unique hardware like GPUs effectively. 
 Don't worry if you're not sure what that looks like yet.
 
 ## What are the components of a cluster?
 ### Nodes
 As explained above, a cluster is a collection of "computers".
-A single computer or group of resources in a cluster is referred
+A single "computer" or group of resources in a cluster is referred
 to as a *node*. For example, your local laptop might have 4 CPUs,
 16GB of RAM, and no GPUs. 
 We can imagine my laptop had identical resources. 
@@ -82,12 +85,12 @@ different partition. We could call this "4 GPU laptops."
 > > ## Solution
 > >
 > > Organising the cluster with partitions makes it possible to
-> > request particular resources based on partition. It also
+> > request particular resources based on partition name. It also
 > > makes it possible to set certain rules for each partition -
 > > for example, you might want a partition that only 
 > > allows code that runs for half an hour on it.
 > > Grouping those nodes into one partition makes it easier to 
-> > organise the cluster for different purposes.
+> > organise the cluster and request the right resources.
 > > {: .output}
 > {: .solution}
 {: .challenge}
@@ -107,14 +110,14 @@ the challenges of a shared computing system.
 However, there are some good motivations for using
 a shared HPC, and some tools designed to make sharing
 much easier than it would be if we just connected
-out computers together. 
+our personal computers together. 
 
 One motivation for using a HPC is that shared hardware
 also means a shared pool of money for buying that hardware.
 Computers are expensive - if I only need a GPU sometimes, 
 or only need large amounts of storage occassionally, 
 it makes sense to split the cost of those resources
-across a group of people, and share the among them too. 
+across a group of people, and share the resources among them too. 
 
 Of course, when sharing a resource among many people, it's 
 important to make sure everyone gets fair access to those resources.
@@ -122,11 +125,12 @@ For this reason, when using a HPC you will request
 access to the resources you need, and then a *scheduler*
 will decide who gets to use the resources next. This ensures if we
 all want to use the same resources at the same time,
-there's a way to decide who gets to use it first, as 
-the scheduler will create a *queue*. You can think of the
-scheduler playing a game of Tetris, where it's trying to fit
-all the resource requests together in the best way possible. 
-On M3, our scheduler is called [SLURM](https://slurm.schedmd.com/).
+there's a method to decide who gets to go first, as 
+the scheduler will create a *queue* of all resource requests. 
+You can think of the scheduler playing a game of Tetris, where it's trying to fit
+all the resource requests together in the best way possible across all the nodes.. 
+On M3, our scheduler is called [SLURM](https://slurm.schedmd.com/), which is widely 
+used on HPCs. 
 
 > ## How do we make scheduling fair?
 >
@@ -146,7 +150,10 @@ On M3, our scheduler is called [SLURM](https://slurm.schedmd.com/).
 > > using the HPC. Another thing to consider is the type of 
 > > hardware being requested - if someone asks for 200GB RAM,
 > > is it worth the same as someone asking for 20GB RAM, or 500 GB of RAM?
-> > It's hard work being a scheduler!
+> > It's hard work being a scheduler! The more technical answer to this 
+> > question is that the SLURM scheduler uses the Fair Tree Fairshare algorithm to
+> > decide how to order the queue, which you can read more about on
+> > the [SLURM Website.](https://slurm.schedmd.com/fair_tree.html)
 > > {: .output}
 > {: .solution}                     
 {: .challenge}
