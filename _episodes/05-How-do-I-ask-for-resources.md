@@ -36,27 +36,34 @@ motivations: I want compute to do stuff!!!
 --->
 
 ## Login and Compute Nodes
-You have learnt tools to navigate the resources available
-to you on the cluster, but we haven't shown you how to 
-access those resources yet. In fact, if you look at the 
-command prompt that you're logged into to HPC on, it will
-say something like [username@m3-login1]. When you login to the cluster, 
+You can see the resources on the cluster now,
+but we still haven't shown you how to access them.
+When you login to the cluster, you'll notice the command line
+will say something like `[m3username@m3-login1 ~]`. 
+This is telling where you are, which is on a login node.
+When you first login to the cluster, 
 rather than putting you on a random node with random 
-resources, you're directed to what's called a login node. 
+resources, you're directed to a login node. 
 The other nodes which you have seen by using tools like
 `sinfo` and `show_cluster`, are referred to as compute nodes.
 
-In general, clusters will have login nodes available. 
-It is important to know the login node is shared between
-all users who have just logged in, so it should be reserved
-for lightweight tasks like opening and editing files,
-navigating around the system, submitting jobs, or other
-non-computationally intensive tasks. If you run big tasks
-on the login node, it will impact other users negatively. 
+In general, clusters will have a few login nodes available
+that everyone will be assigned to when they log on. 
+It is important to know that because the login node is shared between
+all users who have just logged in, it should be reserved
+for lightweight tasks like 
+- Opening and editing files
+- Navigating around the system
+- Submitting jobs
+- Investigating the cluster (`show_cluster`, `sinfo`, etc.)
+- Tasks which aren't computationally intensive.
+
+If you run intensive tasks on the login node, it will impact other users negatively,
+and you may even get a friendly email from the HPC admins asking if 
+you need any help getting onto a compute node.
 This means that before you can do computationally 
-intensive work like running resnet, you should ask for 
-compute node resources, which we will cover shortly. Remember,
-the scheduler ensures compute resource access is fair.
+intensive work like running ResNet, you need to request 
+compute node resources. 
 
 > ## When can you use the login node?
 >
@@ -91,16 +98,15 @@ the scheduler ensures compute resource access is fair.
 Here, we assume you have ssh'd into M3 using a terminal,
 or are running a terminal on the login node with Strudel2. 
 While GUI interfaces exist for accessing HPC, traditionally
-HPC access is provided via the command line, and using Linux. 
+HPC access is provided via the Linux command line.
 It's important to understand how to request resources 
 on the command line,
-and how to query the HPC for your requests.
+and how to query the HPC about your requests.
 
 You will remember from earlier than the cluster is shared 
-among many users, and so there is a scheduler, and queue. 
-*Jobs* refer to tasks for the HPC that wait in the queue, 
-including resource requests - you can think of each resource
-request as a *job*. The way the queue is ordered and the amount
+among many users, and so there is a scheduler which manages the queue. 
+*Jobs* refer to tasks for the HPC which wait in the queue, 
+including resource requests. The way the queue is ordered and the amount
 of time you will wait in the queue is a 
 complicated topic that we will discuss later, but for now
 you can think of the queue as a method for the 
@@ -108,14 +114,14 @@ scheduler to manage supply and demand.
 
 In general, there are two ways to request resources on the 
 command line:
-1. Interactively: You request access to a compute node where you can type in commands 
+1. **Interactively:** You request access to a compute node where you can type in commands 
    in real time, the same way you would on your local workstation.
    You may have to wait in the queue to access a compute node interactively.
 
-2. Job submission: You write a list of instructions and 
-   send them off the queue in a job submission script, which are
-   executed without you actively typing in commands. You may have
-   to wait in the queue for your job to start executing, but it
+2. **Job submission:** You write a list of instructions (commands to execute) and 
+   the resources you need for the commands in a *job submission script*.
+   You then submit your request to the scheduler which will determine when your 
+   job begins You may have to wait in the queue for your job to begin, but it
    will execute automatically when resources are available.
 
 There is an additional way to access compute resources on MASSIVE with 
@@ -138,7 +144,7 @@ pane so you can do work side by side, and otherwise improve your command
 line experience. By combining the two to create `smux`, you have the ability
 to connect and reconnect to interactive sessions as they run - for example,
 if your internet drops out while you're running an interactive job, this allows
-you to reconnect to your interactive session rather than requesting a new one.
+you to reconnect rather than requesting a new session.
 
 In general, the command to start a new interactive job on MASSIVE is 
 
