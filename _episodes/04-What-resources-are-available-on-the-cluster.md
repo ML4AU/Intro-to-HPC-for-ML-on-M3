@@ -21,50 +21,49 @@ motivation: I want to know if I can ask for what I need for my problem
 HPC: 2/5
 ML/ 1/5
 --->
+So far, you've learned
 
-Now you know what the cluster is and how it may assist your research,
-and you have been able to log in. If you have started to think about
-the resources you might be able to use for your research, you may
-also be wondering how to see if the cluster has what you need.
-In this section we will cover a few methods to discover what resources
-are available to you on MASSIVE. 
+- What a cluster is
+- Why you might want to use one
+- How to log into one.
+
+I've told you that there are different resources on a HPC than in your local workstation,
+and in this section I'll show you how to find out what's available to you.
 
 ## What resources are available in general?
 There are a variety of computational resources you may be aware of.
 These include:
 - CPUs (Central Processing Units). These are designed for
   sequential processing.
-- GPUs (Graphical Processing Units). these are designed for displaying 
-  graphics. Graphics are represented with matrices, meaning GPUs 
-  are also excellent at matrix multiplications. Some HPC clusters
-  will have access to "data center" GPUs, especially designed for this
-  type of computation rather than graphical representation. These
-  will differ from what's typically available to your local workstation.
+- GPUs (Graphical Processing Units). These are traditionally designed for displaying 
+  graphics. Graphics are represented with matrices, meaning GPU architecture 
+  is excellent at performing matrix multiplications. Some HPC clusters
+  will have access to "data center" GPUs, especially designed for computation
+  rather than graphics. These will differ from what's typically available to your local workstation.
 - TPUs (Tensor Processing Units). These processors have been
   especially designed for working with tensors and neural networks,
   which you may be familiar with from TensorFlow or PyTorch. Notably,
   Google Colab provides access to TPUs, with [an introductory
   tutorial notebook](https://colab.research.google.com/notebooks/tpu.ipynb).  
-- Time. When using a shared cluster environment, one resource you
-  will need to specify is how much time you require access your
- resources for. 
+- Time. When using a HPC you will need to specify how long
+  you want to use the shared resources for.
 - RAM (Random Access Memory). You will need to consider how much
   memory is required to run your code. 
-- MORE? 
+- Software. Every computer will come with its own unique set of installed
+  software - the HPC is included. We'll talk more about specific software later.
 
 > ## Local resources
 >
-> What resources are available on your local workstation? 
->
+> Take a moment to think about what resources are available on your local workstation. 
+> How many CPUs? Do you have a GPU? Any specialised software?
 > {: .source}
 {: .discussion}
 
 
 ## How do I know what's available on MASSIVE?
-There are a variety of ways to learn about which resources are 
+There are a variety of methods to discover which resources are 
 available to you on a given cluster. Most HPC sites will offer 
-a documentation website with information about what's available. 
-For MASSIVE, you can find our documentation on 
+a documentation website - for MASSIVE, you can find our documentation on 
 [docs.massive.org.au](https://docs.massive.org.au/).
 In particular, you can find out more about our hardware on the 
 [About M3 page](https://docs.massive.org.au/M3/m3users.html), 
@@ -102,16 +101,15 @@ Most of these commands are associated with SLURM, the scheduler for our HPC.
   which you don't understand - this is okay, for our purposes
   it's another way of seeing which partitions are on MASSIVE.
   You can also use `scontrol show partition <partition-name>`
-  to look at specific partitions.
+  to investigate specific partitions.
 ### What nodes are available? 
 - `sinfo --partition=<partition-name> -N --format=%10N%10c%10m%20f%10G` :
-  This sinfo command gives more details about the node on 
-  the partition you specify for <partition-name>. It will
-  print out a list of node names, the number of CPUs, 
-  the memroy on the node, and any other features such as 
-  GPUs on the nodes.
+  This sinfo command gives more details about the nodes on 
+  a partition. It will print out a list of node names, the number of CPUs, 
+  the memory on the node, and any other features such as 
+  GPUs.
 - `show_cluster` : show_cluster is a command developed for 
-  MASSIVE to present a formatted summary of the status of
+  MASSIVE which presents a formatted summary of the status of
   nodes on M3. For a similar output on other clusters, you
   can use `sinfo -lN`. 
 
