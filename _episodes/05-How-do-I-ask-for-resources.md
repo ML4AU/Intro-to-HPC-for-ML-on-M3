@@ -1,5 +1,5 @@
 ---
-title: "How do I request resources on the cluster?"
+title: "How do I request resources on the cluster with smux?"
 teaching: 0
 exercises: 0
 questions:
@@ -142,39 +142,88 @@ you to reconnect to your interactive session rather than requesting a new one.
 
 In general, the command to start a new interactive job on MASSIVE is 
 
-`smux new-session`
-
-This will request an interactive job with default resources of 1 CPU, 
-4G of memory, and 2 hours of walltime. 
+~~~
+smux new-session`
+~~~
 
 <img src="../fig/smux-connecting.png" alt="Screenshot of a terminal after running smux new-session"/>
 
-This request will be added the queue, 
+This will request an interactive job with default resources of 1 CPU, 
+4G of memory, and 2 hours of walltime. This request will be added the queue, 
 and when the resources are available, the job will schedule and you'll have access
-to a compute node.If you run this command, you will
-notice your terminal changes and gains a bar down the bottom letting you know
-which node you're running on. It will look like this:
+to a compute node. When your job starts, you will notice your terminal changes and looks like:
 
-IMAGE HERE
+<img src="../fig/smux-attached.png" alt="Screenshot of a terminal after connection to an smux session"/> 
 
-This means I'm running on a compute node! 
+You will notice the command prompt has changed to say `username@m3i033`, 
+which indicates which compute node I have attached to. The bar down the 
+bottom of the screen indicates I am currently running a tmux session 
+connected to `m3i033`, as well as the date and time. The name of my job,
+"interactive", also appears in the bottom left hand side. 
 
-I can leave this running in the background if I like and exit it by typing
-in `Ctrl+b+d`.
+The power of running `smux` is that you can disconnect and reconnect to this
+session with compute node access while the job is running. To detach from the 
+session without cancelling my job, type in <kbd>Ctrl</kbd>+<kbd>B</kbd>, release the keys, 
+and then press the <kbd>d</kbd> key. 
 
-I can then reconnect to it while there is remaining walltime by running
-smux list-sessions, and then smux attach-session [num]. If I type `exit` or `Ctrl d`,
-I'll leave my session and it will be cancelled.If you run `smux list-sessions`
-following this, you'll see your session has ended.
+To see what sessions I have running, I can use the `smux list-sessions` command,
+and it will output a list of my currently running jobs, as well as any that are 
+still waiting in the queue. 
+
+<img src="../fig/smux-list-sessions.png" alt="Screenshot of a terminal with output from smux list sessions"/>
+
+This includes the job name, and the job ID number assigned 
+by the SLURM scheduler. We will explore the purpose of the job ID number in more depth shortly. 
+To reconnect to a running session, use the `smux attach-session <number>` command
+which will take us back to our session. Any processes which were running when we left the 
+session will have continued to run. 
+
+If you wish to leave the running session, and cancel it, you can type `exit` or 
+use <kbd>Ctrl</kbd>+<kbd>D</kbd>. If you run `smux list-sessions`
+following this, you'll see your session is no longer listed, and you will
+need to request resources again next time you need them.
 
 There are some parameters you can change in your smux command if you 
-need something different than the defaults. For example, you can run
+need different resources than the defaults. For example, you can run:
 
-`smux new-session --time=03:00:00`
+~~~
+smux new-session --time=03:00:00
+~~~
 
-To update the time from 2 hours to 3 hours. You can see the other parameters 
-you're able to change by running smux -h or smux --help, such as ntasks 
-(number of CPUs), memory (amount of RAM), or partition (for specific
+This will update the time of your session from 2 hours to 3 hours. 
+You can see the other parameters you're able to change by running:
+
+~~~
+smux -n --help 
+
+usage: smux new-session [-h] [--ntasks <n>] [--nodes <n>] [--mem <n>]
+                        [--cpuspertask <n>] [--qos <n>] [-J <n>] [-A <n>]
+                        [-p PARTITION] [-r RESERVATION] [-t TIME] [--gres <n>]
+                        [-o <n>] [-e <n>]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --ntasks <n>          The number of tasks you will launch
+  --nodes <n>           The number of nodes you need
+  --mem <n>             The amount of memory you need
+  --cpuspertask <n>     The number of cpus needed for each task
+  --qos <n>             The QoS (Quality of Service) used for the task
+                        (certain QoS are only valid on some partitiotns)  -J <n>, --jobname <n>
+                        The name of your job
+  -A <n>, --account <n>
+                        Specify your account
+  -p PARTITION, --partition PARTITION
+                        The partition to execute on
+  -r RESERVATION, --reservation RESERVATION
+                        The reservation to use
+  -t TIME, --time TIME  The amount of time to run for
+  --gres <n>            The type and number of gpus needed for each task  -o <n>, --output <n>  Standard output file name
+  -e <n>, --error <n>   Error output file name
+~~~
+
+As you can see, you're able to change a variety of paramaters 
+for your resource request, inclusing ntasks 
+(number of CPUs), mem (amount of RAM), or partition (for specific
 partitions with certain resources available). 
 
 
@@ -183,7 +232,7 @@ partitions with certain resources available).
 > Start an smux session with 1 hour walltime and 4 CPUs on the 
 > `comp` partition.
 > 
-> Hint: running smux n --help may help you if you get stuck.
+> Hint: running `smux n --help` may help if you get stuck.
 >
 > {: .source}
 >
@@ -195,7 +244,7 @@ partitions with certain resources available).
 > > smux new-session --time=01:00:00 --ntasks=4 --partition=comp
 > > ~~~
 > > Remember, time assigns time in the format DD-HH:MM:SS, ntasks refers
-> > to the number of cpus, and partition tells smux which partition
+> > to the number of cpus, and partition tells the scheduler which partition
 > > to submit the job to. 
 > > {: .output}
 > {: .solution}
@@ -204,40 +253,75 @@ partitions with certain resources available).
 
 
 If you only ask for a small amount of available resources like the default
-smux new-session command does, you'll likely not wait at all for your
-session to begin. However, if you ask for more than that, you may need 
-to wait for your job before you can connect. Every time you request resources 
-on the HPC you create a job that waits in the queue, and that job
-has an associated job ID. SLURM has a variety of tools for interacting 
-with the jobs you're running that work across interactive jobs, jobs 
-submitted to the cluster with sbatch, and jobs ran with other tools
-such as Strudel Desktops. 
+`smux new-session` command does, you'll likely only wait a few seconds for your
+session to begin. However, if you ask for more resources, you may need 
+to wait for your job to start before you can connect. 
+Every time you request resources on the HPC you create a job that waits 
+in the queue, and that job has an associated job ID as we saw earlier. 
+SLURM has a variety of tools for interacting with jobs you have submitted,
+and jobs that you're running. These tools will work with other methods
+for requesting resources such as job submission with sbatch, and jobs 
+submitted with other tools such as Strudel Desktops. Let's explore these
+tools with an interactive `smux` job. 
 
-For example, you could type in:
+For example, consider the following command:
 
-`smux new-session --ntasks=4 --memory=4G --time=24:00:00 --gres=gpu:2`
+~~~
+smux new-session --ntasks=4 --mem=4G --time=24:00:00 --gres=gpu:2
+~~~
 
-The --gres=gpu:2 portion of the command specifies that we need 2 GPUs.
-Now we're asking for many more resources and a resource that's in high
-demand with the gres command: a node with a GPU. 
-As a result, our interactive job won't start immediately, and we'll be placed in the queue. 
-THIS LOOKS LIKE?
-Here, we can use the smux list-sessions command again to see what's
+The `--gres=gpu:2` portion of the command specifies that we need two GPUs.
+GPUs are specialised resources that are in high demand, and we are requesting 
+two - this will make it more difficult for the scheduler to find available
+resources. This is an example of an interactive job that won't start immediately,
+and our job will wait in the queue for a while.
+
+<img src="../fig/smux-gpu.png" alt="Screenshot of a terminal after requesting 2 GPUs with smux, demonstrating what waiting for an smux session looks like."/>
+
+Here, we can use the `smux list-sessions` command again to see what's
 going with our interactive job. Other SLURM tools we can use to investigate
 our job include:
 
-`squeue -j <job-id>`
-`squeue -u <username>`
-`squeue --start`
-`show_job`
-`scancel`
+~~~
+# To see every job waiting in the queue
+squeue
+# To investigate specific jobs waiting in the queue
+squeue -j <job-id>
+# To investigate all jobs a user has the queue
+squeue -u <username>
+# To find the predicted start time of a job
+# Usually combined with the -j or -u options
+squeue --start
+# A tool built for MASSIVE to list details of jobs running or in the queue
+show_job
+# To cancel a submitted or running job
+scancel
+~~~
+
+You can find your job ID by running `smux list-sessions`, and then try the above commands
+on your waiting job. The final `scancel` command will cancel the job.
+
+<img src="../fig/squeue-output.png" alt="Screenshot of a terminal with output from various squeue commands"/>
+
+The squeue command will output information about your job, including the Job ID,
+the partition the job is submitted to, the name of the job, the user
+running the job, the state it's in, how long it has been running, how many nodes 
+you have requested, and why the job hasn't started yet. Im particular, a state of
+`PD` means pending, and the job submitted above is waiting due to `Resources`.
+This reflects our request for two GPUs which currently aren't available. You can also 
+see the `--start` option has predicted my job start time as 4pm on the 26th of August.
+The output of the `show_job` command is quite lengthy, so I recommend you run this 
+in your own terminal. 
+
 
 > ## Job profiling with interactive jobs
 >
-> One of the reasons you use interactive jobs is to see what resources
-> you will need before moving to job submission.
+> One of the reasons to use interactive jobs is to see what resources
+> you will need before moving to job submission. One way to measure the 
+> the resources used by a job is with the `sacct` command, which we will explore.
+>
 > For this exercise, you should:
-> 1. Reconnect to your smux session from before if you disconnected.
+> 1. Reconnect to your smux session from before if you disconnected, or start another job.
 > 2. Time how long it takes to run the following bash script:
 >    ./thiscourse/bashscript.sh
 > 3. Once you've recorded the time somewhere, cancel your smux interactive job. 
@@ -245,17 +329,16 @@ our job include:
 > ~~~
 > sacct -j <job-id> --format=JobID,Jobname,partition,state,time,start,end,elapsed,MaxRss,MaxVMSize,nnodes,ncpus,nodelist`
 > ~~~   
-> what do you think the output is useful for?
+> What do you think the output is useful for?
 >
 > {: .source}
 >
 > > 
 > > ## Solution                                                         
 > >                                                                     
-> > You would run the command:
 > > 1. To reconnect, you'll use 
 > >    `smux attach-session <job-id>`
-> >    If you've loot your job ID, you can find it by running
+> >    If you've lost your job ID, you can find it by running
 > >    `smux list-sessions`, or `squeue -u <username>`. 
 > >    and if you already deleted your session, you can start a new one.
 > > 2. You will run the command `time ./bash.bash` It should take around [blah]. 
@@ -272,13 +355,15 @@ our job include:
 {: .challenge}
 
 Congratulations - you can now ask for HPC resources interactively! Note,
-if you're ever using a HPC without smux that has the traditional SLURM
-`srun` available, the commands look very similar. For example:
+if you're using a different HPC than MASSIVE you won't have smux, and will use
+`srun` instead. The commands look very similar. For example:
 
-`srun --time=01:00:00 --ntasks=4 --partition=comp`
+~~~
+srun --time=01:00:00 --ntasks=4 --partition=comp
+~~~
 
-You just won't be able to disconnect and reconnect from the session as it runs.
-You can always learn more about srun if needed by going to the
+You won't be able to disconnect and reconnect from the session as it runs.
+You can always learn more about `srun` if needed by going to the
 [SLURM documentation website](https://slurm.schedmd.com/srun.html). 
 
 ## Job submission scripts (sbatch)

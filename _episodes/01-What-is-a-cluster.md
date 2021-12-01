@@ -29,8 +29,6 @@ ML level: 1/5
 
 The acronym HPC refers to a High Performance Computer - but what does that really mean?
 We will spend a little bit of time introducing some core language.
-- The *cloud* refers to any computing resources which are not right 
-  in front of you, or any remote resources. 
 - *Local workstation* in this course will refer to the computer in front of you,
   whether that's a desktop, laptop, tablet, or other device. 
 - *Supercomputer* refers to one particular type of high performance computer,
